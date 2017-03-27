@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <div class="ui secondary pointing attached stackable menu">
+      <div class="ui container">
+        <div class="header item">Archivist</div>
+        <a class="item active">
+          <i class="bar chart icon"></i> Recent documents
+        </a>
+        <a class="item">
+          <i class="add square icon"></i> New document
+        </a>
+        <a class="item">
+          <i class="tags icon"></i> Tags
+        </a>
+        <a class="item">
+          <i class="grid layout icon"></i> Browse
+        </a>
+        <div class="right menu">
+          <a class="item">
+            <i class="setting icon"></i> Settings
+          </a>
+          <div class="item">
+            <div class="ui icon input">
+              <input placeholder="Search for a document" type="text">
+              <i class="search link icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- menu end -->
+
+    <div class="ui four column doubling stackable grid container cards">
+      <div class="ui card">
+        <div class="content">
+          <div class="header">Project Timeline</div>
+        </div>
+        <div class="content">
+          <h4 class="ui sub header">Activity</h4>
+          <div class="ui small feed">
+            <div class="event">
+              <div class="content">
+                <div class="summary">
+                   <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
+                </div>
+              </div>
+            </div>
+            <div class="event">
+              <div class="content">
+                <div class="summary">
+                   <a>Stevie Feliciano</a> was added as an <a>Administrator</a>
+                </div>
+              </div>
+            </div>
+            <div class="event">
+              <div class="content">
+                <div class="summary">
+                   <a>Helen Troy</a> added two pictures
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="extra content">
+          <button class="ui button">Join Project</button>
+        </div>
+      </div>
+
+      <!--
+      <div class="column">b</div>
+      <div class="column">c</div>
+      <div class="column">d</div>
+      -->
+    </div>
+
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  </body>
+</html>
