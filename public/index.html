@@ -18,7 +18,7 @@
   <body>
     <div id="root"></div>
 
-    <div class="ui secondary pointing attached stackable menu">
+    <div class="ui secondary pointing stackable menu">
       <div class="ui container">
         <div class="header item">Archivist</div>
         <a class="item active">
@@ -30,9 +30,11 @@
         <a class="item">
           <i class="tags icon"></i> Tags
         </a>
+        <!--
         <a class="item">
           <i class="grid layout icon"></i> Browse
         </a>
+        -->
         <div class="right menu">
           <a class="item">
             <i class="setting icon"></i> Settings
@@ -47,41 +49,50 @@
       </div>
     </div> <!-- menu end -->
 
-    <div class="ui four column doubling stackable grid container cards">
-      <div class="ui card">
+    <div class="ui four cards container">
+      <div class="ui raised card">
         <div class="content">
-          <div class="header">Project Timeline</div>
-        </div>
-        <div class="content">
-          <h4 class="ui sub header">Activity</h4>
-          <div class="ui small feed">
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                   <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
-                </div>
-              </div>
-            </div>
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                   <a>Stevie Feliciano</a> was added as an <a>Administrator</a>
-                </div>
-              </div>
-            </div>
-            <div class="event">
-              <div class="content">
-                <div class="summary">
-                   <a>Helen Troy</a> added two pictures
-                </div>
-              </div>
-            </div>
+          <a class="header">Rechnung Zahnreinigung</a>
+          <div class="meta">12.03.2017</div>
+          <div class="description">
+            <p>Rechnungsbetrag: EUR 86,45</p>
           </div>
         </div>
         <div class="extra content">
-          <button class="ui button">Join Project</button>
+          <a class="ui small teal tag label">Rechnung</a>
+          <a class="ui small tag label">Zahnarzt</a>
         </div>
       </div>
+
+      <div class="ui raised card">
+        <div class="content">
+          <a class="header">Bestätigung Wertpapierkauf</a>
+          <div class="meta">02.01.2017</div>
+          <div class="description">
+            <p>Kaufbetrag: EUR 120,00</p>
+          </div>
+        </div>
+        <div class="extra content">
+          <a class="ui small yellow tag label">WKN <div class="detail">A1CX3T</div></a>
+          <a class="ui small orange tag label">Bank</a>
+          <a class="ui small basic circular label">+2</a>
+        </div>
+      </div>
+
+      <div class="ui raised card">
+        <div class="content">
+          <a class="header">Kündigung "Der Freitag"</a>
+          <div class="meta">20.02.2017</div>
+          <div class="description">
+          </div>
+        </div>
+        <div class="extra content">
+          <a class="ui small blue tag label">Ausgehend</a>
+          <a class="ui small tag label">Zeitung</a>
+        </div>
+      </div>
+
+
 
       <!--
       <div class="column">b</div>
