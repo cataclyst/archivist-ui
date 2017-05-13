@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <script
-			  src="https://code.jquery.com/jquery-3.2.1.min.js"
-			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-			  crossorigin="anonymous"></script>
-    <script
-			  src="semantic/dist/semantic.js"></script>
+    <script src="jquery.js"></script>
+    <script>
+      $('.ui.dropdown').show();
+    </script>
 
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
@@ -141,9 +139,10 @@
         </div>
       </div>
 
-    </div>
+    </div> <!-- recent changes end -->
 
     <div id="tag-list" class="ui stackable container">
+
       <table  class="ui definition table">
         <thead>
           <tr><th></th>
@@ -159,10 +158,10 @@
               <div class="ui selection dropdown">
                 <input name="gender" type="hidden">
                 <i class="dropdown icon"></i>
-                <div class="default text">Gender</div>
+                <div class="default text">Color</div>
                 <div class="menu">
-                  <div class="item" data-value="1">Male</div>
-                  <div class="item" data-value="0">Female</div>
+                  <div class="item" data-value="1">Red</div>
+                  <div class="item" data-value="0">Green</div>
                 </div>
               </div>
 
