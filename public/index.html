@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <script src="jquery.js"></script>
+
+
     <script>
-      $('.ui.dropdown').show();
+
     </script>
 
     <!--
@@ -21,6 +22,10 @@
     <title>React App</title>
   </head>
   <body>
+    <script src="jquery.js"></script>
+    <script src="main.js"></script>
+    <script src="semantic.js"></script>
+
     <div id="root"></div>
 
     <div class="ui secondary pointing stackable menu">
@@ -54,7 +59,7 @@
       </div>
     </div> <!-- menu end -->
 
-    <div id="recent-changes" class="ui four stackable cards container" style="display:none">
+    <div id="recent-changes" class="ui four stackable cards container" style="display: none">
       <div class="ui raised card">
         <div class="content">
           <a class="header">Rechnung Zahnreinigung</a>
@@ -155,54 +160,157 @@
             <td><a class="ui small teal tag label">Rechnung</a></td>
             <td>
 
-              <div class="ui selection dropdown">
-                <input name="gender" type="hidden">
-                <i class="dropdown icon"></i>
-                <div class="default text">Color</div>
+              <div class="ui left pointing dropdown icon button">
+                <i class="settings icon"></i>
                 <div class="menu">
-                  <div class="item" data-value="1">Red</div>
-                  <div class="item" data-value="0">Green</div>
-                </div>
-              </div>
-
-
-              <div class="ui floating dropdown labeled icon button">
-                <i class="filter icon"></i>
-                <span class="text">Filter Posts</span>
-                <div class="menu">
-                  <div class="scrolling menu">
-                    <div class="item">
+                    <div class="item" data-value="0">
                       <div class="ui red empty circular label"></div>
+                      Red
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="1">
                       <div class="ui blue empty circular label"></div>
+                      Blue
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="2">
                       <div class="ui black empty circular label"></div>
+                      Black
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="3">
                       <div class="ui purple empty circular label"></div>
+                      Purple
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="4">
                       <div class="ui orange empty circular label"></div>
+                      Orange
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="5">
                       <div class="ui empty circular label"></div>
+                      Gray
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="6">
                       <div class="ui yellow empty circular label"></div>
+                      Yellow
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="7">
                       <div class="ui pink empty circular label"></div>
+                      Pink
                     </div>
-                    <div class="item">
+                    <div class="item" data-value="8">
                       <div class="ui green empty circular label"></div>
+                      Green
                     </div>
-                  </div>
+                    <div class="item" data-value="9">
+                      <div class="ui teal empty circular label"></div>
+                      Teal
+                    </div>
                 </div>
               </div>
             </td>
-            <td><a class="ui small blue tag label">Kosten</a></td>
+            <td><a class="ui small yellow tag label">Kosten</a></td>
+            <td><button class="ui basic button">Show</button></td>
+          </tr>
+          <tr>
+            <td><a class="ui small blue tag label">Ausgehend</a></td>
+            <td>
+              <div class="ui left pointing dropdown icon button">
+                <i class="settings icon"></i>
+                <div class="menu">
+                    <div class="item" data-value="0">
+                      <div class="ui red empty circular label"></div>
+                      Red
+                    </div>
+                    <div class="item" data-value="1">
+                      <div class="ui blue empty circular label"></div>
+                      Blue
+                    </div>
+                    <div class="item" data-value="2">
+                      <div class="ui black empty circular label"></div>
+                      Black
+                    </div>
+                    <div class="item" data-value="3">
+                      <div class="ui purple empty circular label"></div>
+                      Purple
+                    </div>
+                    <div class="item" data-value="4">
+                      <div class="ui orange empty circular label"></div>
+                      Orange
+                    </div>
+                    <div class="item" data-value="5">
+                      <div class="ui empty circular label"></div>
+                      Gray
+                    </div>
+                    <div class="item" data-value="6">
+                      <div class="ui yellow empty circular label"></div>
+                      Yellow
+                    </div>
+                    <div class="item" data-value="7">
+                      <div class="ui pink empty circular label"></div>
+                      Pink
+                    </div>
+                    <div class="item" data-value="8">
+                      <div class="ui green empty circular label"></div>
+                      Green
+                    </div>
+                    <div class="item" data-value="9">
+                      <div class="ui teal empty circular label"></div>
+                      Teal
+                    </div>
+                </div>
+              </div>
+            </td>
+            <td></td>
+            <td><button class="ui basic button">Show</button></td>
+          </tr>
+          <tr>
+            <td><a class="ui small tag label">Zahnarzt</a></td>
+            <td>
+              <div class="ui left pointing dropdown icon button">
+                <i class="settings icon"></i>
+                <div class="menu">
+                    <div class="item" data-value="0">
+                      <div class="ui red empty circular label"></div>
+                      Red
+                    </div>
+                    <div class="item" data-value="1">
+                      <div class="ui blue empty circular label"></div>
+                      Blue
+                    </div>
+                    <div class="item" data-value="2">
+                      <div class="ui black empty circular label"></div>
+                      Black
+                    </div>
+                    <div class="item" data-value="3">
+                      <div class="ui purple empty circular label"></div>
+                      Purple
+                    </div>
+                    <div class="item" data-value="4">
+                      <div class="ui orange empty circular label"></div>
+                      Orange
+                    </div>
+                    <div class="item" data-value="5">
+                      <div class="ui empty circular label"></div>
+                      Gray
+                    </div>
+                    <div class="item" data-value="6">
+                      <div class="ui yellow empty circular label"></div>
+                      Yellow
+                    </div>
+                    <div class="item" data-value="7">
+                      <div class="ui pink empty circular label"></div>
+                      Pink
+                    </div>
+                    <div class="item" data-value="8">
+                      <div class="ui green empty circular label"></div>
+                      Green
+                    </div>
+                    <div class="item" data-value="9">
+                      <div class="ui teal empty circular label"></div>
+                      Teal
+                    </div>
+                </div>
+              </div>
+            </td>
+            <td><a class="ui small yellow tag label">Kosten</a></td>
             <td><button class="ui basic button">Show</button></td>
           </tr>
         </tbody>
