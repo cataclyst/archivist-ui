@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
-
-    <script>
-
-    </script>
-
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -19,7 +14,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Archivist</title>
   </head>
   <body>
     <script src="jquery.js"></script>
@@ -206,7 +201,14 @@
                 </div>
               </div>
             </td>
-            <td><a class="ui small yellow tag label">Kosten</a></td>
+            <td>
+              <a class="ui small yellow tag label">Kosten</a>
+              <a class="ui small brown tag label">Eingehend</a>
+              <div class="ui horizontal bulleted list">
+                <div class="item">and <a class="item">2 more</a></div>
+                <a class="item">Add a tag</a>
+              </div>
+            </td>
             <td><button class="ui basic button">Show</button></td>
           </tr>
           <tr>
@@ -258,7 +260,67 @@
                 </div>
               </div>
             </td>
-            <td></td>
+            <td>
+              <div class="ui horizontal bulleted list">
+                <a class="item">Add a tag</a>
+              </div>
+            </td>
+            <td><button class="ui basic button">Show</button></td>
+          </tr>
+          <tr>
+            <td><a class="ui small brown tag label">Eingehend</a></td>
+            <td>
+              <div class="ui left pointing dropdown icon button">
+                <i class="settings icon"></i>
+                <div class="menu">
+                    <div class="item" data-value="0">
+                      <div class="ui red empty circular label"></div>
+                      Red
+                    </div>
+                    <div class="item" data-value="1">
+                      <div class="ui blue empty circular label"></div>
+                      Blue
+                    </div>
+                    <div class="item" data-value="2">
+                      <div class="ui black empty circular label"></div>
+                      Black
+                    </div>
+                    <div class="item" data-value="3">
+                      <div class="ui purple empty circular label"></div>
+                      Purple
+                    </div>
+                    <div class="item" data-value="4">
+                      <div class="ui orange empty circular label"></div>
+                      Orange
+                    </div>
+                    <div class="item" data-value="5">
+                      <div class="ui empty circular label"></div>
+                      Gray
+                    </div>
+                    <div class="item" data-value="6">
+                      <div class="ui yellow empty circular label"></div>
+                      Yellow
+                    </div>
+                    <div class="item" data-value="7">
+                      <div class="ui pink empty circular label"></div>
+                      Pink
+                    </div>
+                    <div class="item" data-value="8">
+                      <div class="ui green empty circular label"></div>
+                      Green
+                    </div>
+                    <div class="item" data-value="9">
+                      <div class="ui teal empty circular label"></div>
+                      Teal
+                    </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="ui horizontal bulleted list">
+                <a class="item">Add a tag</a>
+              </div>
+            </td>
             <td><button class="ui basic button">Show</button></td>
           </tr>
           <tr>
@@ -310,7 +372,12 @@
                 </div>
               </div>
             </td>
-            <td><a class="ui small yellow tag label">Kosten</a></td>
+            <td>
+              <a class="ui small yellow tag label">Kosten</a>
+              <div class="ui horizontal bulleted list">
+                <a class="item">Add a tag</a>
+              </div>
+            </td>
             <td><button class="ui basic button">Show</button></td>
           </tr>
         </tbody>
