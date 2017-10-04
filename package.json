@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "react-scripts": "0.9.5",
-    "semantic-ui": "^2.2.9"
+    "semantic-ui": "^2.2.13"
   },
   "scripts": {
     "start": "react-scripts start",
