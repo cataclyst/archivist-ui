@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-//import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import {BrowserRouter, Route} from 'react-router-dom';
+import Menu from './menu';
+import RecentChanges from "./recent_changes";
+import TagList from "./tag_list";
 
-//import {Button} from 'semantic-ui-react';
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-      </div>
-    );
-  }
-}
+const App = () => (
+    <BrowserRouter>
+        <div>
+            <Menu />
+            <Route path='/' exact component={RecentChanges} />
+            <Route path='/tags' component={TagList} />
+        </div>
+    </BrowserRouter>
+);
 
 export default App;
