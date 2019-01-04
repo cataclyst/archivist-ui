@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// import './lib/jquery';
+import { reducer } from "./store/reducers/reducer";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
 import './semantic/dist/semantic.min.css';
 
+const store = createStore(reducer);
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

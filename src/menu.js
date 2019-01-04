@@ -1,36 +1,50 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
+import React, { Component } from 'react'
+import {NavLink, withRouter } from "react-router-dom";
 import { Menu, Button } from 'semantic-ui-react';
 
-const AppMenu = ({match}) => (
-    <div className="ui secondary pointing stackable menu">
+import { connect } from "react-redux";
+import * as actions from "./store/actions/actions";
+
+const AppMenu = (props) => (
+      <Menu pointing secondary stackable>
         <div className="ui container">
             <div className="header item">Archivist</div>
-            <NavLink to="/" exact activeClassName="active" className="item">
+            <NavLink to="/" exact className="item">
                 <i className="bar chart icon"/> Recent documents
             </NavLink>
-            <NavLink to="/tags" activeClassName="active" className="item">
+            <NavLink to="/tags" className="item">
                 <i className="tags icon"/> Tags
             </NavLink>
             <Menu.Item>
-                <Button primary>
+                <Button primary onClick={props.showNewEntryForm}>
                     {/* <i className="add square icon"/>  */}
                     New document
                 </Button>
             </Menu.Item>
-            <div className="right menu">
-                <NavLink to="/settings" activeClassName="active" className="item">
+            <Menu.Menu position='right'>
+                <NavLink to="/settings" className="item">
                     <i className="setting icon"/> Settings
                 </NavLink>
-                <div className="item">
+                <Menu.Item>
                     <div className="ui icon input">
                         <input placeholder="Search for a document" type="text"/>
                         <i className="search link icon"/>
                     </div>
-                </div>
-            </div>
+                </Menu.Item>
+            </Menu.Menu>
         </div>
-    </div>
-);
+    </Menu>
+)
 
-export default AppMenu;
+const mapStateToProps = state => {
+    return {}
+  };
+  
+const mapDispatchToProps = {
+    showNewEntryForm: actions.showNewEntryForm
+};
+  
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AppMenu));

@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
-class NewEntry extends Component {
-  state = { isFormOpen: false }
+import { connect } from "react-redux";
 
-  open = () => this.setState({ isFormOpen: true })
-  close = () => this.setState({ isFormOpen: false })
+class NewEntry extends Component {
 
   render() {
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}
-        open={this.state.modalOpen}
+        open={this.props.isEntryFormVisible}
         onClose={this.handleClose}
-        basic
         size='small'
       >
         <Header icon='browser' content='Cookies policy' />
@@ -30,4 +26,16 @@ class NewEntry extends Component {
   }
 }
 
-export default NewEntry
+const mapStateToProps = state => {
+  return {
+    isEntryFormVisible: state.isEntryFormVisible
+  };
+};
+
+const mapDispatchToProps = {
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewEntry);
