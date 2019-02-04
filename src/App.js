@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import {BrowserRouter, Route} from 'react-router-dom';
 import AppMenu from './menu';
@@ -13,7 +13,6 @@ const App = () => (
             <NewEntry />
             <Route path='/' exact component={RecentChanges} />
             <Route path='/tags' component={TagList} />
-            {/* <Route path='/add' component={NewEntry} /> */}
         </div>
     </BrowserRouter>
 );
