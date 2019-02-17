@@ -3,6 +3,7 @@ import { Button, Header, Icon, Modal, Form, Label, Segment } from 'semantic-ui-r
 
 import { connect } from "react-redux";
 import * as actions from "./store/actions/actions";
+import moment from "moment";
 
 class NewEntry extends Component {
 
@@ -13,11 +14,15 @@ class NewEntry extends Component {
     this.onRemoveTag = this.onRemoveTag.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeComment = this.onChangeComment.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
+
+    var today = moment();
 
     this.state = {
-      date: new Date(),
-      title: "pfkf",
-      comment: "comm",
+      date: today.toDate(),
+      dateDisplayValue: today.format("DD.MM.YYYY"),
+      title: "",
+      comment: "",
       tags: [],
     };
   }
@@ -28,12 +33,6 @@ class NewEntry extends Component {
       <Label key={oneTag.label} color='grey' size='small' tag >{oneTag.label}
         <Icon name='delete' onClick={() => this.onRemoveTag(oneTag.label)}/></Label>
     ));
-
-    var dateFormattingOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    };
 
     return (
       <Modal
@@ -53,7 +52,7 @@ class NewEntry extends Component {
             <Segment>
               {tagList}
             </Segment>
-            <Form.Input label='Date' value={this.state.date.toLocaleDateString('de', dateFormattingOptions)} />
+            <Form.Input label='Date' value={this.state.dateDisplayValue} onChange={this.onChangeDate} />
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -85,11 +84,22 @@ class NewEntry extends Component {
   }
 
   onChangeDate(event) {
-    // TODO 
+    var dateDisplayValue = event.target.value;
+    var parsedDate = moment.utc(event.target.value, 'DD.MM.YYYY', true);
+    var newValue;
+    if (parsedDate.isValid()) {
+      newValue = parsedDate.toDate();
+    } else {
+      newValue = undefined;
+    }
+    this.setState({
+      ...this.state,
+      date: newValue,
+      dateDisplayValue: dateDisplayValue,
+    });
   }
 
   onAddTag(tagLabel) {
-
     if (!this.state.tags.map(x => x.label).includes(tagLabel)) {
       var newTags = this.state.tags.slice();
       newTags.push({ "label": tagLabel });
