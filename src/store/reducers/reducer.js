@@ -9,6 +9,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isEntryFormVisible: true,
+        selectedTagsOnForm: [],
       };
     case "CONFIRM_NEW_ENTRY":
       return {
@@ -20,7 +21,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isEntryFormVisible: false,
       };
-    case "ADD_TAG_EDIT_OR_NEW_ENTRY":
+    case "ADD_TAG_EDIT_OR_NEW_ENTRY": {
       var newSelectedTags = state.selectedTagsOnForm.slice();
       if (!newSelectedTags.map(x => x.label).includes(action.addedTag.label)) {
         newSelectedTags.push(action.addedTag);
@@ -29,13 +30,15 @@ export const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         selectedTagsOnForm: newSelectedTags,
       };
-    case "REMOVE_TAG_EDIT_OR_NEW_ENTRY":
+    }
+    case "REMOVE_TAG_EDIT_OR_NEW_ENTRY": {
       var newSelectedTags = state.selectedTagsOnForm.filter(x => x.label !== action.removedTag.label);
 
       return {
         ...state,
         selectedTagsOnForm: newSelectedTags,
       };
+    }
     default:
       return state;
   }
