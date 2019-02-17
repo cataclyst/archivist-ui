@@ -1,19 +1,19 @@
 export const showNewEntryForm = () => {
   return {
-    type: "SHOW_NEW_ENTRY_FORM"
+    type: "SHOW_ENTRY_FORM"
   };
 };
 
-export const confirmNewEntry = (newEntry) => {
+export const confirmEntryForm = (entry) => {
   return {
-    type: "CONFIRM_NEW_ENTRY",
-    entry: newEntry,
+    type: "CONFIRM_ENTRY_FORM",
+    entry: entry,
   };
 };
 
-export const cancelEditOrNewEntry = () => {
+export const cancelEntryForm = () => {
   return {
-    type: "CANCEL_EDIT_OR_NEW_ENTRY"
+    type: "CANCEL_ENTRY_FORM"
   };
 };
 

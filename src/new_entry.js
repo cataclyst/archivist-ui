@@ -126,15 +126,12 @@ class NewEntry extends Component {
 const mapStateToProps = state => {
   return {
     isEntryFormVisible: state.isEntryFormVisible,
-    tags: state.selectedTagsOnForm,
   };
 };
 
 const mapDispatchToProps = {
-  confirm: actions.confirmNewEntry,
-  cancel: actions.cancelEditOrNewEntry,
-  addTag: actions.addTagOnEditOrNewEntry,
-  removeTag: actions.removeTagOnEditOrNewEntry,
+  confirm: actions.confirmEntryForm,
+  cancel: actions.cancelEntryForm,
 };
 
 export default connect(
