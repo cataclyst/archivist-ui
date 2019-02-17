@@ -16,17 +16,3 @@ export const cancelEntryForm = () => {
     type: "CANCEL_ENTRY_FORM"
   };
 };
-
-export const addTagOnEditOrNewEntry = (addedTag) => {
-  return {
-    type: "ADD_TAG_EDIT_OR_NEW_ENTRY",
-    addedTag: addedTag,
-  };
-};
-
-export const removeTagOnEditOrNewEntry = (removedTag) => {
-  return {
-    type: "REMOVE_TAG_EDIT_OR_NEW_ENTRY",
-    removedTag: removedTag,
-  };
-};
