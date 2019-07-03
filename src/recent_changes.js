@@ -1,6 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from "moment";
 
-const RecentChanges = () => (
+function RecentChanges(props) {
+
+    const [recentChanges, setRecentChanges] = useState([]);
+
+    var d = moment.now();
+
+    // useEffect(() => {
+    //     fetch('http://jsonplaceholder.typicode.com/users')
+    //     .then(res => res.json())
+    //     .then((data) => {
+    //       setRecentChanges(data);
+    //       console.log(data);
+    //     })
+    //     .catch(console.log);
+    // });
+
+    useEffect(() => {
+        setRecentChanges([
+            {
+                name: "ABC",
+                date: d,
+                description: "Betrag: 123",
+                labels: ["l1", "l2"],
+            }
+        ]);
+    }, []);
+
+    return <div id="recent-changes" className="ui four stackable cards container">
+        {recentChanges.map((recentChange) => 
+            <div className="ui raised card">
+                <div className="content">
+                    <a className="header">{recentChange.name}</a>
+                    <div className="meta">{recentChange.date}</div>
+                    <div className="description">
+                        <p>{recentChange.description}</p>
+                    </div>
+                </div>
+                <div className="extra content">
+                    {recentChange.labels.map((label) => <a className="ui small teal tag label">Rechnung</a>)}
+                </div>
+            </div>)
+            }
+    </div>;
+}
+
+const RecentChangesBak = () => (
 
     <div id="recent-changes" className="ui four stackable cards container">
         <div className="ui raised card">
