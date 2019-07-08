@@ -4,42 +4,80 @@ import moment from "moment";
 function RecentChanges(props) {
 
     const [recentChanges, setRecentChanges] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    var d = moment.now();
-
-    // useEffect(() => {
-    //     fetch('http://jsonplaceholder.typicode.com/users')
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //       setRecentChanges(data);
-    //       console.log(data);
-    //     })
-    //     .catch(console.log);
-    // });
+    var d = moment().subtract(2, 'days');
 
     useEffect(() => {
-        setRecentChanges([
-            {
-                name: "ABC",
-                date: d,
-                description: "Betrag: 123",
-                labels: ["l1", "l2"],
-            }
-        ]);
+        fetch('http://localhost:8080')
+        .then(res => res.json())
+        .then((data) => {
+          setRecentChanges(data);
+          setIsLoading(false);
+        })
+        .catch(function(e) {
+            console.error(e);
+            setIsLoading(false);
+        });
     }, []);
+
+    // useEffect(() => {
+    //     setRecentChanges([
+    //         {
+    //             id: "abcdef-ghijk",
+    //             name: "ABC",
+    //             date: d,
+    //             description: "Betrag: 123",
+    //             labels: ["l1", "l2"],
+    //         },
+    //         {
+    //             id: "abcdef-ghijk2",
+    //             name: "DEF",
+    //             date: d,
+    //             description: "blub",
+    //             labels: ["l1", "l2"],
+    //         },
+    //         {
+    //             id: "abcdef-ghijk3",
+    //             name: "GHI",
+    //             date: d,
+    //             description: "Abonnement",
+    //             labels: ["l1", "l2"],
+    //         },
+    //         {
+    //             id: "abcdef-ghijk4",
+    //             name: "JKE",
+    //             date: d,
+    //             description: "Ausgehende Rechnung",
+    //             labels: ["l1", "l2"],
+    //         }
+    //     ]);
+    //     console.log("effect done");
+    // }, []);
+
+    if (isLoading) {
+        return <div class="ui segment">
+            <div class="ui active dimmer">
+                <div class="ui text loader">Loading</div>
+            </div>
+            <p></p>
+        </div>;
+    }
 
     return <div id="recent-changes" className="ui four stackable cards container">
         {recentChanges.map((recentChange) => 
-            <div className="ui raised card">
+            <div key={recentChange.id} className="ui raised card">
                 <div className="content">
                     <a className="header">{recentChange.name}</a>
-                    <div className="meta">{recentChange.date}</div>
+                    <div className="meta" title={moment(recentChange.date).format('lll')}>{moment(recentChange.date).fromNow()}</div>
                     <div className="description">
                         <p>{recentChange.description}</p>
                     </div>
                 </div>
                 <div className="extra content">
-                    {recentChange.labels.map((label) => <a className="ui small teal tag label">Rechnung</a>)}
+                    {recentChange.labels.map((label) => 
+                        <a key={label} className="ui small teal tag label">{label}</a>)
+                    }
                 </div>
             </div>)
             }
