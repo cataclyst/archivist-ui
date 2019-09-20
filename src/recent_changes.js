@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import moment from "moment";
 
+import {Link, NavLink, withRouter} from "react-router-dom";
+
+import { connect } from "react-redux";
+import * as actions from "./store/actions/actions";
+
 function RecentChanges(props) {
 
     const [recentChanges, setRecentChanges] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    var d = moment().subtract(2, 'days');
-
     useEffect(() => {
-        fetch('http://localhost:8080')
-        .then(res => res.json())
-        .then((data) => {
-          setRecentChanges(data);
-          setIsLoading(false);
+
+        const query = `query {
+            recentDocuments {
+              id
+              title
+              description
+              date
+            }
+          }
+        `;
+
+        fetch('http://localhost:9090/query', {
+            method: "POST",
+            body: JSON.stringify({query: query}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
         })
-        .catch(function(e) {
-            console.error(e);
-            setIsLoading(false);
-        });
+            .then(res => res.json())
+            .then((data) => {
+                setRecentChanges(data.data.recentDocuments);
+                setIsLoading(false);
+            })
+            .catch(function(e) {
+                console.error(e);
+                setIsLoading(false);
+            })
     }, []);
 
     // useEffect(() => {
@@ -56,11 +77,10 @@ function RecentChanges(props) {
     // }, []);
 
     if (isLoading) {
-        return <div class="ui segment">
-            <div class="ui active dimmer">
-                <div class="ui text loader">Loading</div>
+        return <div className="ui segment">
+            <div className="ui active dimmer">
+                <div className="ui text loader">Loading</div>
             </div>
-            <p></p>
         </div>;
     }
 
@@ -68,110 +88,36 @@ function RecentChanges(props) {
         {recentChanges.map((recentChange) => 
             <div key={recentChange.id} className="ui raised card">
                 <div className="content">
-                    <a className="header">{recentChange.name}</a>
+                    <Link to={"/documents/" + recentChange.id} className="header">{recentChange.title}</Link>
                     <div className="meta" title={moment(recentChange.date).format('lll')}>{moment(recentChange.date).fromNow()}</div>
                     <div className="description">
                         <p>{recentChange.description}</p>
                     </div>
                 </div>
                 <div className="extra content">
-                    {recentChange.labels.map((label) => 
-                        <a key={label} className="ui small teal tag label">{label}</a>)
-                    }
+                    { bla(recentChange) }
                 </div>
             </div>)
             }
     </div>;
 }
 
-const RecentChangesBak = () => (
+function bla(recentChange) {
+    if (recentChange.tags) {
+        return recentChange.tags.map((label) =>
+                <a key={label} className="ui small teal tag label">{label}</a>);
+    }
+}
 
-    <div id="recent-changes" className="ui four stackable cards container">
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Rechnung Zahnreinigung</a>
-                <div className="meta">12.03.2017</div>
-                <div className="description">
-                    <p>Rechnungsbetrag: EUR 86,45</p>
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small teal tag label">Rechnung</a>
-                <a className="ui small tag label">Zahnarzt</a>
-            </div>
-        </div>
+const mapStateToProps = state => {
+    return {}
+};
 
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Bestätigung Wertpapierkauf</a>
-                <div className="meta">02.01.2017</div>
-                <div className="description">
-                    <p>Kaufbetrag: EUR 120,00</p>
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small yellow tag label">WKN <div className="detail">A1CX3T</div></a>
-                <a className="ui small orange tag label">Bank</a>
-                <a className="ui small basic circular label">+2</a>
-            </div>
-        </div>
+const mapDispatchToProps = {
+    showEditEntryForm: actions.showEditEntryForm
+};
 
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Kündigung "Der Freitag"</a>
-                <div className="meta">20.02.2017</div>
-                <div className="description">
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small blue tag label">Ausgehend</a>
-                <a className="ui small tag label">Zeitung</a>
-            </div>
-        </div>
-
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Bestätigung Wertpapierkauf</a>
-                <div className="meta">02.01.2017</div>
-                <div className="description">
-                    <p>Kaufbetrag: EUR 120,00</p>
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small yellow tag label">WKN <div className="detail">A1CX3T</div></a>
-                <a className="ui small orange tag label">Bank</a>
-                <a className="ui small basic circular label">+2</a>
-            </div>
-        </div>
-
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Kündigung "Der Freitag"</a>
-                <div className="meta">20.02.2017</div>
-                <div className="description">
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small blue tag label">Ausgehend</a>
-                <a className="ui small tag label">Zeitung</a>
-            </div>
-        </div>
-
-        <div className="ui raised card">
-            <div className="content">
-                <a className="header">Rechnung Zahnreinigung</a>
-                <div className="meta">12.03.2017</div>
-                <div className="description">
-                    <p>Rechnungsbetrag: EUR 86,45</p>
-                </div>
-            </div>
-            <div className="extra content">
-                <a className="ui small teal tag label">Rechnung</a>
-                <a className="ui small tag label">Zahnarzt</a>
-            </div>
-        </div>
-
-    </div>
-);
-
-export default RecentChanges;
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RecentChanges));

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import AppMenu from './menu';
 import RecentChanges from "./recent_changes";
 import TagList from "./tag_list";
@@ -13,6 +13,10 @@ const App = () => (
             <NewEntry />
             <Route path='/' exact component={RecentChanges} />
             <Route path='/tags' component={TagList} />
+            <Switch>
+                <Route path="/documents/new" component={NewEntry} />
+                <Route path="/documents/:id" component={NewEntry} />
+            </Switch>
         </div>
     </BrowserRouter>
 );

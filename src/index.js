@@ -9,12 +9,15 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import './semantic/dist/semantic.min.css';
+import {BrowserRouter, Route} from "react-router-dom";
 
 const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+      <BrowserRouter>
+          <Route path="/" component={App} />
+      </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
