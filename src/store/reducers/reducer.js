@@ -1,23 +1,19 @@
-const INITIAL_STATE = {
-  isEntryFormVisible: false,
-};
+const INITIAL_STATE = {};
 
 export const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SHOW_ENTRY_FORM":
       return {
         ...state,
-        isEntryFormVisible: true,
+        entryBeingEdited: action.entryID,
       };
     case "CONFIRM_ENTRY_FORM":
       return {
         ...state,
-        isEntryFormVisible: false,
       };
     case "CANCEL_ENTRY_FORM":
       return {
         ...state,
-        isEntryFormVisible: false,
       };
     default:
       return state;

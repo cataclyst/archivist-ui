@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Header, Icon, Modal, Form, Label, Segment } from 'semantic-ui-react'
 
+import { withRouter } from "react-router-dom";
+
 import { connect } from "react-redux";
 import * as actions from "./store/actions/actions";
 import moment from "moment";
@@ -13,38 +15,44 @@ class NewEntry extends Component {
     this.onAddTag = this.onAddTag.bind(this);
     this.onRemoveTag = this.onRemoveTag.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeComment = this.onChangeComment.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onClickOk = this.onClickOk.bind(this);
 
-    var today = moment();
+    const today = moment();
 
     this.state = {
+      documentIdBeingEdited: props.match.params.id,
       date: today.toDate(),
       dateDisplayValue: today.format("DD.MM.YYYY"),
       title: "",
-      comment: "",
+      description: "",
       tags: [],
     };
   }
 
-  render() {
+  render( params ) {
 
     const tagList = this.state.tags.map((oneTag) => (
       <Label key={oneTag.label} color='grey' size='small' tag >{oneTag.label}
         <Icon name='delete' onClick={() => this.onRemoveTag(oneTag.label)}/></Label>
     ));
 
+    let header = <Header icon='add circle' content='Add a new document' />;
+    if (this.props.match.params.id) {
+      header = <Header icon='pen square' content={this.props.match.params.id} />
+    }
+
     return (
       <Modal
-        open={this.props.isEntryFormVisible}
+        open={true}
         onClose={this.handleClose}
         centered={false}>
-
-        <Header icon='add circle' content='Add a new document' />
+        {header}
         <Modal.Content>
           <Form>
             <Form.Input label='Title' value={this.state.title} onChange={this.onChangeTitle} />
-            <Form.TextArea label='Comments' value={this.state.comment} onChange={this.onChangeComment} />
+            <Form.TextArea label='Description' value={this.state.description} onChange={this.onChangeDescription} />
             <Form.Input label='Tags' icon='tags'
               iconPosition='left'
               action='Add tag'
@@ -56,37 +64,37 @@ class NewEntry extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='red' onClick={this.props.cancel} >
+          <Button color='red' onClick={this.props.history.goBack} >
             <Icon name='remove' /> Cancel
           </Button>
-          <Button color='green' onClick={this.props.confirm} >
+          <Button color='green' onClick={this.onClickOk} >
             <Icon name='checkmark' /> OK
           </Button>
         </Modal.Actions>
       </Modal>
-      )
+      );
   }
 
   onChangeTitle(event) {
-    var newValue = event.target.value;
+    const newValue = event.target.value;
     this.setState({
       ...this.state,
       title: newValue,
     });
   }
 
-  onChangeComment(event) {
-    var newValue = event.target.value;
+  onChangeDescription(event) {
+    const newValue = event.target.value;
     this.setState({
       ...this.state,
-      comment: newValue,
+      description: newValue,
     });
   }
 
   onChangeDate(event) {
-    var dateDisplayValue = event.target.value;
-    var parsedDate = moment.utc(event.target.value, 'DD.MM.YYYY', true);
-    var newValue;
+    const dateDisplayValue = event.target.value;
+    const parsedDate = moment.utc(event.target.value, 'DD.MM.YYYY', true);
+    let newValue;
     if (parsedDate.isValid()) {
       newValue = parsedDate.toDate();
     } else {
@@ -101,7 +109,7 @@ class NewEntry extends Component {
 
   onAddTag(tagLabel) {
     if (!this.state.tags.map(x => x.label).includes(tagLabel)) {
-      var newTags = this.state.tags.slice();
+      const newTags = this.state.tags.slice();
       newTags.push({ "label": tagLabel });
       this.setState({ 
         ...this.state,
@@ -121,12 +129,49 @@ class NewEntry extends Component {
       event.currentTarget.value = "";
     }
   }
+
+  onClickOk() {
+
+    const date = moment(this.state.date).format("YYYY-MM-DD");
+
+    // Convert array to a format that GraphQL understands:
+    const tags = this.state.tags.map(t => `{ title: "${t.label}", context: "" }`).join(", ");
+
+    const mutationQuery = `
+      mutation {
+        createDocument(
+          input: {
+            title: "${this.state.title}"
+            description: "${this.state.description}"
+            date: "${date}"
+            tags: [${tags}]
+          })
+        {
+          id
+        }
+      }
+    `;
+
+    fetch('http://localhost:9090/query', {
+      method: "POST",
+      body: JSON.stringify({query: mutationQuery}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log("Success! " + data);
+      })
+      .catch(function(e) {
+        console.error(e);
+      });
+  }
 }
 
-const mapStateToProps = state => {
-  return {
-    isEntryFormVisible: state.isEntryFormVisible,
-  };
+const mapStateToProps = (state, ownProps) => {
+  return {};
 };
 
 const mapDispatchToProps = {
@@ -134,7 +179,7 @@ const mapDispatchToProps = {
   cancel: actions.cancelEntryForm,
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewEntry);
+)(NewEntry));

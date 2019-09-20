@@ -4,6 +4,13 @@ export const showNewEntryForm = () => {
   };
 };
 
+export const showEditEntryForm = (entryID) => {
+  return {
+    type: "SHOW_ENTRY_FORM",
+    entryIDBeingEdited: entryID,
+  };
+};
+
 export const confirmEntryForm = (entry) => {
   return {
     type: "CONFIRM_ENTRY_FORM",

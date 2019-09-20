@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, withRouter } from "react-router-dom";
+import {Link, NavLink, withRouter} from "react-router-dom";
 import { Menu, Button, Icon, Input, Container } from 'semantic-ui-react';
 
 import { connect } from "react-redux";
@@ -16,9 +16,11 @@ const AppMenu = (props) => (
                 <Icon name="tags"/> Tags
             </NavLink>
             <Menu.Item>
-                <Button primary onClick={props.showNewEntryForm}>
-                    <Icon name="add circle" /> New document
-                </Button>
+                <Link to={"/documents/new"}>
+                    <Button primary onClick={props.showNewEntryForm}>
+                        <Icon name="add circle" /> New document
+                    </Button>
+                </Link>
             </Menu.Item>
             <Menu.Menu position='right'>
                 <NavLink to="/settings" className="item">
