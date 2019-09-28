@@ -43,12 +43,12 @@ function RecentChanges(props) {
 
     if (isLoading) {
         return <div id="recent-changes" className="ui four stackable cards container">
-            { [...Array(20)].map((e, i) => loadingDocument) }
+            { [...Array(20)].map((e, i) => loadingDocument(i)) }
         </div>;
     }
 
     return <div id="recent-changes" className="ui four stackable cards container">
-        {recentChanges.data.recentDocuments.map((recentChange) =>
+        {recentChanges.map((recentChange) =>
             <div key={recentChange.id} className="ui raised card">
                 <div className="content">
                     <Link to={"/documents/" + recentChange.id} className="header">{recentChange.title}</Link>
@@ -58,37 +58,37 @@ function RecentChanges(props) {
                     </div>
                 </div>
                 <div className="extra content">
-                    { bla(recentChange) }
+                    { tagList(recentChange) }
                 </div>
             </div>)
         }
     </div>;
 }
 
-const loadingDocument =
-    <div class="ui raised card">
+const loadingDocument = i =>
+    <div key={i} className="ui raised card">
         <div className="content">
-            <div class="ui placeholder">
-                <div class="header">
-                    <div class="full line"></div>
-                    <div class="medium line"></div>
-                    <div class="very long line"></div>
-                    <div class="long line"></div>
+            <div className="ui placeholder">
+                <div className="header">
+                    <div className="full line"/>
+                    <div className="medium line"/>
+                    <div className="very long line"/>
+                    <div className="long line"/>
                 </div>
             </div>
         </div>
         <div className="extra content">
-            <div class="ui placeholder">
-                <div class="paragraph">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
+            <div className="ui placeholder">
+                <div className="paragraph">
+                    <div className="line"/>
+                    <div className="line"/>
+                    <div className="line"/>
                 </div>
             </div>
         </div>
     </div>;
 
-function bla(recentChange) {
+function tagList(recentChange) {
     if (recentChange.tags) {
         return recentChange.tags.map((label) =>
                 <a key={label} className="ui small teal tag label">{label}</a>);
