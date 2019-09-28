@@ -134,16 +134,22 @@ class NewEntry extends Component {
 
   onChangeFile(event) {
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = (file => {
+      return function(e) {
+        const arrayBuffer = e.target.result;
+        const fileAsBase64 = arrayBufferToBase64(arrayBuffer);
 
-      const arrayBuffer = e.target.result;
-      const fileAsBase64 = arrayBufferToBase64(arrayBuffer);
+        const newDocumentData = this.state.documentData || {};
+        newDocumentData.binaryDataBase64 = fileAsBase64;
+        newDocumentData.fileName = file.name;
+        newDocumentData.mimeType = file.type;
+        this.setState({
+          ...this.state,
+          documentData: newDocumentData,
+        });
+      }
+    })(event.target.files[0]).bind(this);
 
-      this.setState({
-        ...this.state,
-        binaryData: fileAsBase64,
-      });
-    }.bind(this);
     reader.readAsArrayBuffer(event.target.files[0]);
   }
 
@@ -161,7 +167,11 @@ class NewEntry extends Component {
             description: "${this.state.description}"
             date: "${date}"
             tags: [${tags}]
-            binaryData: "${this.state.binaryData}"
+            documentData: {
+              binaryDataBase64: "${this.state.documentData.binaryDataBase64}"
+              fileName: "${this.state.documentData.fileName}"
+              mimeType: "${this.state.documentData.mimeType}"
+            }
           })
         {
           id
