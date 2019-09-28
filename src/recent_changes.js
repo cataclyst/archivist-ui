@@ -18,6 +18,10 @@ function RecentChanges(props) {
               title
               description
               date
+              tags {
+                title
+                context
+              }
             }
           }
         `;
@@ -48,7 +52,7 @@ function RecentChanges(props) {
     }
 
     return <div id="recent-changes" className="ui four stackable cards container">
-        {recentChanges.map((recentChange) =>
+        {(recentChanges || []).map((recentChange) =>
             <div key={recentChange.id} className="ui raised card">
                 <div className="content">
                     <Link to={"/documents/" + recentChange.id} className="header">{recentChange.title}</Link>
@@ -90,8 +94,9 @@ const loadingDocument = i =>
 
 function tagList(recentChange) {
     if (recentChange.tags) {
-        return recentChange.tags.map((label) =>
-                <a key={label} className="ui small teal tag label">{label}</a>);
+        return recentChange.tags.map((tag) => {
+            return <a key={tag.title} className="ui small teal tag label">{tag.title}</a>
+        });
     }
 }
 
