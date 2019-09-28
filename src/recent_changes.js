@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from "moment";
 
-import {Link, NavLink, withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 import { connect } from "react-redux";
 import * as actions from "./store/actions/actions";
@@ -12,13 +12,16 @@ function RecentChanges(props) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-
         const query = `query {
             recentDocuments {
               id
               title
               description
               date
+              tags {
+                title
+                context
+              }
             }
           }
         `;
@@ -42,50 +45,14 @@ function RecentChanges(props) {
             })
     }, []);
 
-    // useEffect(() => {
-    //     setRecentChanges([
-    //         {
-    //             id: "abcdef-ghijk",
-    //             name: "ABC",
-    //             date: d,
-    //             description: "Betrag: 123",
-    //             labels: ["l1", "l2"],
-    //         },
-    //         {
-    //             id: "abcdef-ghijk2",
-    //             name: "DEF",
-    //             date: d,
-    //             description: "blub",
-    //             labels: ["l1", "l2"],
-    //         },
-    //         {
-    //             id: "abcdef-ghijk3",
-    //             name: "GHI",
-    //             date: d,
-    //             description: "Abonnement",
-    //             labels: ["l1", "l2"],
-    //         },
-    //         {
-    //             id: "abcdef-ghijk4",
-    //             name: "JKE",
-    //             date: d,
-    //             description: "Ausgehende Rechnung",
-    //             labels: ["l1", "l2"],
-    //         }
-    //     ]);
-    //     console.log("effect done");
-    // }, []);
-
     if (isLoading) {
-        return <div className="ui segment">
-            <div className="ui active dimmer">
-                <div className="ui text loader">Loading</div>
-            </div>
+        return <div id="recent-changes" className="ui four stackable cards container">
+            { [...Array(20)].map((e, i) => loadingDocument(i)) }
         </div>;
     }
 
     return <div id="recent-changes" className="ui four stackable cards container">
-        {recentChanges.map((recentChange) => 
+        {(recentChanges || []).map((recentChange) =>
             <div key={recentChange.id} className="ui raised card">
                 <div className="content">
                     <Link to={"/documents/" + recentChange.id} className="header">{recentChange.title}</Link>
@@ -95,17 +62,41 @@ function RecentChanges(props) {
                     </div>
                 </div>
                 <div className="extra content">
-                    { bla(recentChange) }
+                    { tagList(recentChange) }
                 </div>
             </div>)
-            }
+        }
     </div>;
 }
 
-function bla(recentChange) {
+const loadingDocument = i =>
+    <div key={i} className="ui raised card">
+        <div className="content">
+            <div className="ui placeholder">
+                <div className="header">
+                    <div className="full line"/>
+                    <div className="medium line"/>
+                    <div className="very long line"/>
+                    <div className="long line"/>
+                </div>
+            </div>
+        </div>
+        <div className="extra content">
+            <div className="ui placeholder">
+                <div className="paragraph">
+                    <div className="line"/>
+                    <div className="line"/>
+                    <div className="line"/>
+                </div>
+            </div>
+        </div>
+    </div>;
+
+function tagList(recentChange) {
     if (recentChange.tags) {
-        return recentChange.tags.map((label) =>
-                <a key={label} className="ui small teal tag label">{label}</a>);
+        return recentChange.tags.map((tag) => {
+            return <a key={tag.title} className="ui small teal tag label">{tag.title}</a>
+        });
     }
 }
 

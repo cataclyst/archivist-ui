@@ -17,6 +17,7 @@ class NewEntry extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeFile = this.onChangeFile.bind(this);
     this.onClickOk = this.onClickOk.bind(this);
 
     const today = moment();
@@ -61,6 +62,7 @@ class NewEntry extends Component {
               {tagList}
             </Segment>
             <Form.Input label='Date' value={this.state.dateDisplayValue} onChange={this.onChangeDate} />
+            <Form.Input type='file' label='Select a file' onChange={this.onChangeFile}/>
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -130,8 +132,22 @@ class NewEntry extends Component {
     }
   }
 
-  onClickOk() {
+  onChangeFile(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
 
+      const arrayBuffer = e.target.result;
+      const fileAsBase64 = arrayBufferToBase64(arrayBuffer);
+
+      this.setState({
+        ...this.state,
+        binaryData: fileAsBase64,
+      });
+    }.bind(this);
+    reader.readAsArrayBuffer(event.target.files[0]);
+  }
+
+  onClickOk() {
     const date = moment(this.state.date).format("YYYY-MM-DD");
 
     // Convert array to a format that GraphQL understands:
@@ -145,6 +161,7 @@ class NewEntry extends Component {
             description: "${this.state.description}"
             date: "${date}"
             tags: [${tags}]
+            binaryData: "${this.state.binaryData}"
           })
         {
           id
@@ -162,12 +179,22 @@ class NewEntry extends Component {
     })
       .then(res => res.json())
       .then((data) => {
-        console.log("Success! " + data);
+        console.log("Success! " + JSON.stringify(data));
       })
       .catch(function(e) {
         console.error(e);
       });
   }
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array( buffer );
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode( bytes[ i ] );
+  }
+  return window.btoa( binary );
 }
 
 const mapStateToProps = (state, ownProps) => {
