@@ -10,7 +10,6 @@ const App = () => (
     <BrowserRouter>
         <div>
             <AppMenu />
-            {/*<NewEntry />*/}
             <Route path='/' exact component={RecentChanges} />
             <Route path='/tags' component={TagList} />
             <Switch>
