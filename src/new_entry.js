@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/actions";
 import moment from "moment";
+import uuidv4 from "uuid";
 
 function NewEntry(props) {
 
@@ -103,7 +104,7 @@ function NewEntry(props) {
         <Button color='red' onClick={props.history.goBack} >
           <Icon name='remove' /> Cancel
         </Button>
-        <Button color='green' onClick={(e) => onClickOk(title, date, description, tags, documentData, props.history)} >
+        <Button color='green' onClick={(e) => onClickOk(documentIdBeingEdited, title, date, description, tags, documentData, props.history)} >
           <Icon name='checkmark' /> OK
         </Button>
       </Modal.Actions>
@@ -172,7 +173,9 @@ function onChangeFile(event, documentData, setDocumentData) {
   reader.readAsArrayBuffer(event.target.files[0]);
 }
 
-function onClickOk(title, date, description, tags, documentData, history) {
+function onClickOk(documentIdBeingEdited, title, date, description, tags, documentData, history) {
+  const documentId = documentIdBeingEdited || uuidv4();
+
   const dateFormatted = moment(date).format("YYYY-MM-DD");
 
   // Convert array to a format that GraphQL understands:
@@ -180,8 +183,9 @@ function onClickOk(title, date, description, tags, documentData, history) {
 
   const mutationQuery = `
     mutation {
-      createDocument(
+      createOrUpdateDocument(
         input: {
+          id: "${documentId}"
           title: "${title}"
           description: "${description}"
           date: "${dateFormatted}"
