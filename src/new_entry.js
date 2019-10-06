@@ -9,15 +9,6 @@ import moment from "moment";
 
 function NewEntry(props) {
 
-  // this.onTagInputKeyPress = this.onTagInputKeyPress.bind(this);
-  // this.onAddTag = this.onAddTag.bind(this);
-  // this.onRemoveTag = this.onRemoveTag.bind(this);
-  // this.onChangeTitle = this.onChangeTitle.bind(this);
-  // this.onChangeDescription = this.onChangeDescription.bind(this);
-  // this.onChangeDate = this.onChangeDate.bind(this);
-  // this.onChangeFile = this.onChangeFile.bind(this);
-  // this.onClickOk = this.onClickOk.bind(this);
-
   const today = moment();
 
   const [documentIdBeingEdited, setDocumentBeingEdited] = useState(undefined);
@@ -29,8 +20,13 @@ function NewEntry(props) {
   const [documentData, setDocumentData] = useState(undefined);
 
   useEffect(() => {
+
+    if (!props || !props.match || !props.match.params || !props.match.params.id) {
+      return;
+    }
+
     const query = `query {
-          document() {
+          document(id: "${props.match.params.id}") {
             id
             title
             description
@@ -54,13 +50,23 @@ function NewEntry(props) {
         .then(res => res.json())
         .then((data) => {
           // TODO actually handle "data"
+          if (data.errors) {
+            // TODO handle error properly
+            console.error(`Could not fetch data for document ${props.match.params.id}: ${JSON.stringify(data.errors)}`);
+            return;
+          }
+          setTitle(data.data.document.title);
+          setDescription(data.data.document.description);
+          setDate(moment(data.data.document.date));
+
+          setTags((data.data.document.tags || []).map(t => { return { label: t.title } }));
         })
         .catch(function(e) {
           console.error(e);
           // TODO handle "isLoading"
           // setIsLoading(false);
         })
-  }, []);
+  }, [props.match.params.id]);
 
   const tagList = tags.map((oneTag) => (
     <Label key={oneTag.label} color='grey' size='small' tag >{oneTag.label}
@@ -137,7 +143,7 @@ function onAddTag(tagLabel, tags, setTags) {
 }
 
 function onRemoveTag(tagLabel, tags, setTags) {
-  setTags({ tags: tags.filter(x => x.label !== tagLabel) });
+  setTags(tags.filter(x => x.label !== tagLabel));
 }
 
 function onTagInputKeyPress(event, tags, setTags) {
