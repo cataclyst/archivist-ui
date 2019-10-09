@@ -12,7 +12,7 @@ function NewEntry(props) {
 
   const today = moment();
 
-  const [documentIdBeingEdited, setDocumentBeingEdited] = useState(undefined);
+  const [documentIdBeingEdited, setDocumentIdBeingEdited] = useState(undefined);
   const [date, setDate] = useState(today.toDate());
   const [dateDisplayValue, setDateDisplayValue] = useState(today.format('DD.MM.YYYY'));
   const [title, setTitle] = useState('');
@@ -25,6 +25,8 @@ function NewEntry(props) {
     if (!props || !props.match || !props.match.params || !props.match.params.id) {
       return;
     }
+
+    setDocumentIdBeingEdited(props.match.params.id);
 
     const query = `query {
           document(id: "${props.match.params.id}") {
