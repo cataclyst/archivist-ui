@@ -52,17 +52,18 @@ function NewEntry(props) {
     })
         .then(res => res.json())
         .then((data) => {
-          // TODO actually handle "data"
           if (data.errors) {
             // TODO handle error properly
             console.error(`Could not fetch data for document ${props.match.params.id}: ${JSON.stringify(data.errors)}`);
             return;
           }
-          setTitle(data.data.document.title);
-          setDescription(data.data.document.description);
-          setDate(moment(data.data.document.date));
+          let document = data.data.document;
+          setTitle(document.title);
+          setDescription(document.description);
+          setDate(moment(document.date));
+          setDateDisplayValue(moment(document.date).format('DD.MM.YYYY'));
 
-          setTags((data.data.document.tags || []).map(t => { return { label: t.title } }));
+          setTags((document.tags || []).map(t => { return { label: t.title } }));
         })
         .catch(function(e) {
           console.error(e);
