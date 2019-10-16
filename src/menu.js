@@ -27,12 +27,20 @@ const AppMenu = (props) => (
                     <Icon name="setting"/> Settings
                 </NavLink>
                 <Menu.Item>
-                    <Input icon="search" placeholder="Search for a document" />
+                    <Input icon="search" placeholder="Search for a document" onChange={e => onSearch(e, props.history)}/>
                 </Menu.Item>
             </Menu.Menu>
         </Container>
     </Menu>
-)
+);
+
+function onSearch(e, history) {
+    if (e.target.value) {
+        history.push('/search?term=' + e.target.value);
+    } else {
+        history.push('/');
+    }
+}
 
 const mapStateToProps = state => {
     return {}
