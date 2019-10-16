@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from "moment";
+import DocumentSummary from "./document_summary";
 
 import {Link, withRouter} from "react-router-dom";
 
@@ -53,18 +54,12 @@ function RecentChanges(props) {
 
     return <div id="recent-changes" className="ui four stackable cards container">
         {(recentChanges || []).map((recentChange) =>
-            <div key={recentChange.id} className="ui raised card">
-                <div className="content">
-                    <Link to={"/documents/" + recentChange.id} className="header">{recentChange.title}</Link>
-                    <div className="meta" title={moment(recentChange.date).format('lll')}>{moment(recentChange.date).fromNow()}</div>
-                    <div className="description">
-                        <p>{recentChange.description}</p>
-                    </div>
-                </div>
-                <div className="extra content">
-                    { tagList(recentChange) }
-                </div>
-            </div>)
+            <DocumentSummary
+                documentId={recentChange.id}
+                title={recentChange.title}
+                description={recentChange.description}
+                date={recentChange.date}
+                tags={recentChange.tags} />)
         }
     </div>;
 }
