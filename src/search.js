@@ -6,14 +6,14 @@ import { useParams } from "react-router-dom";
 
 function SearchResults(props) {
 
-    const { searchTerm} = useParams();
+    const {searchTerm} = useParams();
 
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const query = `query {
-            search(term: ${searchTerm} {
+            search(term: "${searchTerm}") {
               id
               title
               description
@@ -36,14 +36,18 @@ function SearchResults(props) {
         })
             .then(res => res.json())
             .then((data) => {
-                setSearchResults(data.data.searchResults);
                 setIsLoading(false);
+                if (data.errors) {
+                    // TODO does not render - why?
+                    return <div>ERROR!</div>;
+                }
+                setSearchResults(data.data.search);
             })
             .catch(function(e) {
                 console.error(e);
                 setIsLoading(false);
             })
-    }, []);
+    }, [searchTerm]);
 
     if (isLoading) {
         return <div id="recent-changes" className="ui four stackable cards container">
@@ -62,9 +66,5 @@ function SearchResults(props) {
         }
     </div>;
 }
-
-SearchResults.propTypes = {
-  searchTerm: PropTypes.string.isRequired,
-};
 
 export default SearchResults;
