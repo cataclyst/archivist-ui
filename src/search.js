@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import DocumentSummary from "./document_summary";
-
-import {withRouter} from "react-router-dom";
-
-import { connect } from "react-redux";
-import * as actions from "./store/actions/actions";
+import PropTypes from 'prop-types';
 import LoadingDocumentPlaceholder from "./loading_document_placeholder";
+import { useParams } from "react-router-dom";
 
-function RecentChanges(props) {
+function SearchResults(props) {
 
-    const [recentChanges, setRecentChanges] = useState([]);
+    const { searchTerm} = useParams();
+
+    const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const query = `query {
-            recentDocuments {
+            search(term: ${searchTerm} {
               id
               title
               description
@@ -37,7 +36,7 @@ function RecentChanges(props) {
         })
             .then(res => res.json())
             .then((data) => {
-                setRecentChanges(data.data.recentDocuments);
+                setSearchResults(data.data.searchResults);
                 setIsLoading(false);
             })
             .catch(function(e) {
@@ -48,12 +47,12 @@ function RecentChanges(props) {
 
     if (isLoading) {
         return <div id="recent-changes" className="ui four stackable cards container">
-            { [...Array(20)].map((e, i) => <LoadingDocumentPlaceholder index={i} />) }
+            { [...Array(20)].map((e, i) => <LoadingDocumentPlaceholder index={i}/>) }
         </div>;
     }
 
     return <div id="recent-changes" className="ui four stackable cards container">
-        {(recentChanges || []).map((recentChange) =>
+        {(searchResults || []).map((recentChange) =>
             <DocumentSummary
                 documentId={recentChange.id}
                 title={recentChange.title}
@@ -64,15 +63,8 @@ function RecentChanges(props) {
     </div>;
 }
 
-const mapStateToProps = state => {
-    return {}
+SearchResults.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = {
-    showEditEntryForm: actions.showEditEntryForm
-};
-
-export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(RecentChanges));
+export default SearchResults;

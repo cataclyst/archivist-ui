@@ -5,6 +5,7 @@ import AppMenu from './menu';
 import RecentChanges from "./recent_changes";
 import TagList from "./tag_list";
 import NewEntry from "./new_entry";
+import SearchResults from "./search";
 
 const App = () => (
     <BrowserRouter>
@@ -12,6 +13,7 @@ const App = () => (
             <AppMenu />
             <Route path='/' exact component={RecentChanges} />
             <Route path='/tags' component={TagList} />
+            <Route path='/search/:searchTerm' component={SearchResults}/>
             <Switch>
                 <Route path="/documents/new" component={NewEntry} />
                 <Route path="/documents/:id" component={NewEntry} />

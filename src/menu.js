@@ -36,7 +36,7 @@ const AppMenu = (props) => (
 
 function onSearch(e, history) {
     if (e.target.value) {
-        history.push('/search?term=' + e.target.value);
+        history.push('/search/' + escape(e.target.value));
     } else {
         history.push('/');
     }
