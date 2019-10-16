@@ -48,7 +48,7 @@ function RecentChanges(props) {
 
     if (isLoading) {
         return <div id="recent-changes" className="ui four stackable cards container">
-            { [...Array(20)].map((e, i) => <LoadingDocumentPlaceholder index={i} />) }
+            { [...Array(20)].map((e, i) => <LoadingDocumentPlaceholder key={i} />) }
         </div>;
     }
 

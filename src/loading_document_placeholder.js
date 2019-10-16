@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function LoadingDocumentPlaceholder(props) {
-    return <div key={props.index} className="ui raised card">
+    return <div className="ui raised card">
             <div className="content">
                 <div className="ui placeholder">
                     <div className="header">
@@ -24,9 +24,5 @@ function LoadingDocumentPlaceholder(props) {
             </div>
         </div>;
 }
-
-LoadingDocumentPlaceholder.propTypes = {
-  index: PropTypes.number.isRequired,
-};
 
 export default LoadingDocumentPlaceholder;
