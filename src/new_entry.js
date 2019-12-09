@@ -100,7 +100,7 @@ function NewEntry(props) {
             {tagList}
           </Segment>
           <Form.Input label='Date' value={dateDisplayValue} onChange={(e) => onChangeDate(e, setDate, setDateDisplayValue)} />
-          <Form.Input type='file' label='Select a file' onChange={(e) => onChangeFile(e, setDocumentData)}/>
+          <Form.Input type='file' label='Select a file' onChange={(e) => onChangeFile(e, documentData, setDocumentData)}/>
         </Form>
       </Modal.Content>
       <Modal.Actions>
